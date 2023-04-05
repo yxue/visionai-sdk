@@ -8,6 +8,9 @@ class LvaGraphBuilder:
     def __init__(self):
         self.graph = LvaGraph("hello")
 
+    def add_source(self, operator):
+        pass
+
     """
     Build the LVA graph.
     
