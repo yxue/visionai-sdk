@@ -4,17 +4,12 @@ from abc import abstractmethod, ABC
 class Operator(ABC):
     @property
     @abstractmethod
-    def operator(self):
+    def name(self) -> str:
         pass
 
     @property
     @abstractmethod
-    def input_args(self):
-        pass
-
-    @property
-    @abstractmethod
-    def output_args(self):
+    def output_args(self) -> list[str]:
         pass
 
     @property
@@ -25,12 +20,8 @@ class Operator(ABC):
 
 class GcsVideoSource(Operator):
     @property
-    def operator(self):
+    def name(self):
         return "GcsSource"
-
-    @property
-    def input_args(self):
-        return []
 
     @property
     def output_args(self):
@@ -38,17 +29,13 @@ class GcsVideoSource(Operator):
 
     @property
     def attributes(self):
-        return ["input_video_gcs_path"]
+        return {}
 
 
 class GcsProtoSink(Operator):
     @property
-    def operator(self):
+    def name(self):
         return "GcsProtoSink"
-
-    @property
-    def input_args(self):
-        return ["annotation"]
 
     @property
     def output_args(self):
@@ -56,17 +43,13 @@ class GcsProtoSink(Operator):
 
     @property
     def attributes(self):
-        return ["output_file_gcs_path"]
+        return {}
 
 
 class OccupancyCounting(Operator):
     @property
-    def operator(self):
+    def name(self):
         return "OccupancyCounting"
-
-    @property
-    def input_args(self):
-        return ["input_stream"]
 
     @property
     def output_args(self):
@@ -74,4 +57,4 @@ class OccupancyCounting(Operator):
 
     @property
     def attributes(self):
-        return ["detect_person"]
+        return {}

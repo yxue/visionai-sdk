@@ -1,6 +1,8 @@
 from core.lva_graph_builder import LvaGraphBuilder
-from core.operators import *
+from core.operator import *
 
-builder = LvaGraphBuilder()
-
-print(builder.build().name)
+g = LvaGraphBuilder("test-analysis").\
+    add_analyzer(GcsVideoSource(), "gcs_source").\
+    add_analyzer(GcsProtoSink(), "gcs_sink").\
+    connect("gcs_source", "gcs_sink")\
+    .build()
