@@ -1,3 +1,9 @@
+import queue
+
+from googleapis.google.cloud.visionai.v1.lva_resources_pb2 import Analysis
+from googleapis.google.cloud.visionai.v1.lva_pb2 import AnalysisDefinition, AnalyzerDefinition
+
+
 class Vertex:
     """Vertex in the LVA graph."""
 
@@ -35,11 +41,12 @@ class LvaGraph:
     :param name: The name of the graph.
     :type name: string
     """
-
     def __init__(self, name):
         self.name = name
         self._vertices: list[Vertex] = []
-        self._edges: dict[str, list[Edge]] = {}
+        self._edges_in: dict[str, list[Edge]] = {}
+        self._edges_out: dict[str, list[Edge]] = {}
+        self._out_degrees: dict[str, int] = {}
 
     """
     Add a vertex to the LVA graph.
@@ -58,6 +65,37 @@ class LvaGraph:
     :param ch: The streaming channel between the source and destination analyzer.
     """
     def add_edge(self, src, dst, ch) -> None:
-        if src not in self._edges:
-            self._edges[src] = []
-        self._edges[src].append(Edge(src, dst, ch))
+        if dst not in self._edges_in:
+            self._edges_in[dst] = []
+        if src not in self._edges_out:
+            self._edges_out[src] = []
+        self._edges_in[dst].append(Edge(src, dst, ch))
+        self._edges_out[src].append(Edge(src, dst, ch))
+        self._out_degrees[src] = self._out_degrees[src] + 1
+
+    """
+    Analysis converts the LVA graph to an Analysis resource.
+    
+    :return: The LVA analysis.
+    :rtype: Analysis.
+    """
+    def analysis(self) -> Analysis:
+        analyzers: list[AnalyzerDefinition] = []
+        q: queue.Queue[Vertex] = queue.Queue()
+        out_degrees = self._out_degrees
+        for operator in self._vertices:
+            if out_degrees[operator.name] == 0:
+                q.put(operator)
+        while not q.empty():
+            v = q.get()
+            analyzer = AnalyzerDefinition(
+                analyzer=v.name,
+                operator=v.operator.name,
+            )
+            for e in self._edges_in[v.name]:
+                analyzer.inputs.append(AnalyzerDefinition.StreamInput(input='{e.src}:{e.name}'))
+                out_degrees[e.src] -= 1
+                if out_degrees[e.src] == 0:
+                    q.put(self._vertices[e.src])
+            analyzers.append(analyzer)
+        return Analysis(name=self.name, analysis_definition=AnalysisDefinition(analyzers=analyzers))
