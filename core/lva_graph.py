@@ -69,9 +69,11 @@ class LvaGraph:
             self._edges_in[dst] = []
         if src not in self._edges_out:
             self._edges_out[src] = []
+        if src not in self._out_degrees:
+            self._out_degrees[src] = 0
         self._edges_in[dst].append(Edge(src, dst, ch))
         self._edges_out[src].append(Edge(src, dst, ch))
-        self._out_degrees[src] = self._out_degrees[src] + 1
+        self._out_degrees[src] += 1
 
     """
     Analysis converts the LVA graph to an Analysis resource.
@@ -84,7 +86,7 @@ class LvaGraph:
         q: queue.Queue[Vertex] = queue.Queue()
         out_degrees = self._out_degrees
         for operator in self._vertices:
-            if out_degrees[operator.name] == 0:
+            if operator.name not in out_degrees or out_degrees[operator.name] == 0:
                 q.put(operator)
         while not q.empty():
             v = q.get()
