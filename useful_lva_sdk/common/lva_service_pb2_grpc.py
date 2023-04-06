@@ -2,8 +2,8 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from common import lva_resources_pb2 as google_dot_cloud_dot_visionai_dot_v1_dot_lva__resources__pb2
-from common import lva_service_pb2 as google_dot_cloud_dot_visionai_dot_v1_dot_lva__service__pb2
+from useful_lva_sdk.common import lva_resources_pb2 as google_dot_cloud_dot_visionai_dot_v1_dot_lva__resources__pb2
+from useful_lva_sdk.common import lva_service_pb2 as google_dot_cloud_dot_visionai_dot_v1_dot_lva__service__pb2
 from google.longrunning import operations_pb2 as google_dot_longrunning_dot_operations__pb2
 
 

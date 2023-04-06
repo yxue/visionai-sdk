@@ -1,5 +1,5 @@
-from core.lva_graph import LvaGraph
-from core.operator import Operator
+from useful_lva_sdk.core.lva_graph import LvaGraph
+from useful_lva_sdk.core.operator import Operator
 
 
 class LvaGraphBuilder:

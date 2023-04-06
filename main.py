@@ -1,5 +1,6 @@
-from core.lva_graph_builder import LvaGraphBuilder
-from core.operator import *
+from useful_lva_sdk.core.lva_graph_builder import LvaGraphBuilder
+from useful_lva_sdk.core.operator import *
+from useful_lva_sdk.client.lva_client import *
 
 analysis = LvaGraphBuilder("test-analysis") \
     .add_analyzer(GcsVideoSource(), "gcs_source") \
@@ -9,4 +10,4 @@ analysis = LvaGraphBuilder("test-analysis") \
     .connect("gcs_source", "oc") \
     .build().analysis()
 
-
+print(analysis)

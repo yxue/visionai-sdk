@@ -1,7 +1,7 @@
 import queue
 
-from common.lva_resources_pb2 import Analysis
-from common.lva_pb2 import AnalysisDefinition, AnalyzerDefinition
+from useful_lva_sdk.common.lva_resources_pb2 import Analysis
+from useful_lva_sdk.common.lva_pb2 import AnalysisDefinition, AnalyzerDefinition
 
 
 class Vertex:

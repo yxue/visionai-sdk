@@ -3,11 +3,11 @@ import time
 from google import auth as google_auth
 from google.auth.transport import requests as google_auth_transport_requests
 from google.auth.transport import grpc as google_auth_transport_grpc
-from common.lva_service_pb2_grpc import LiveVideoAnalyticsStub
-from common.operations_pb2_grpc import OperationsStub
-from common.lva_service_pb2 import *
-from common.lva_resources_pb2 import *
-from common.operations_pb2 import *
+from useful_lva_sdk.common.lva_service_pb2_grpc import LiveVideoAnalyticsStub
+from useful_lva_sdk.common.operations_pb2_grpc import OperationsStub
+from useful_lva_sdk.common.lva_service_pb2 import *
+from useful_lva_sdk.common.lva_resources_pb2 import *
+from useful_lva_sdk.common.operations_pb2 import *
 
 
 def get_endpoint(env: str) -> str:
