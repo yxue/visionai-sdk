@@ -1,6 +1,7 @@
-from setuptools import setup, find_packages
-from codecs import open
+"""Set up the package"""
 from os import path
+
+from setuptools import setup, find_packages
 
 HERE = path.abspath(path.dirname(__file__))
 
@@ -21,7 +22,6 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
@@ -30,5 +30,11 @@ setup(
     ],
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["google-api-core", "google-auth", "googleapis-common-protos", "grpcio", "protobuf"]
+    install_requires=[
+        "google-api-core",
+        "google-auth",
+        "googleapis-common-protos",
+        "grpcio",
+        "protobuf"
+    ]
 )

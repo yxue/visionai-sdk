@@ -2,7 +2,7 @@ from google.api import annotations_pb2 as _annotations_pb2
 from google.api import client_pb2 as _client_pb2
 from google.api import field_behavior_pb2 as _field_behavior_pb2
 from google.api import resource_pb2 as _resource_pb2
-from common import lva_resources_pb2 as _lva_resources_pb2
+from useful_lva_sdk.common import lva_resources_pb2 as _lva_resources_pb2
 from google.longrunning import operations_pb2 as _operations_pb2
 from google.protobuf import field_mask_pb2 as _field_mask_pb2
 from google.protobuf.internal import containers as _containers

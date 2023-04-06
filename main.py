@@ -1,6 +1,6 @@
+"""Demo file using the library"""
 from useful_lva_sdk.core.lva_graph_builder import LvaGraphBuilder
-from useful_lva_sdk.core.operator import *
-from useful_lva_sdk.client.lva_client import *
+from useful_lva_sdk.core.operator import GcsProtoSink, GcsVideoSource, OccupancyCounting
 
 analysis = LvaGraphBuilder("test-analysis") \
     .add_analyzer(GcsVideoSource(), "gcs_source") \

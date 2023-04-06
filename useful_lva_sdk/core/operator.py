@@ -1,24 +1,34 @@
+"""Operator registry that includes all supported operators."""
 from abc import abstractmethod, ABC
 
 
 class Operator(ABC):
+    """Base operator class"""
+
     @property
     @abstractmethod
     def name(self) -> str:
-        pass
+        """
+        Name of the operator
+        """
 
     @property
     @abstractmethod
     def output_args(self) -> list[str]:
-        pass
+        """
+        Output arguments of the operator
+        """
 
     @property
     @abstractmethod
     def attributes(self):
-        pass
+        """
+        Attributes of the operator
+        """
 
 
 class GcsVideoSource(Operator):
+    """GCS video source operator"""
     @property
     def name(self):
         return "GcsSource"
@@ -33,6 +43,7 @@ class GcsVideoSource(Operator):
 
 
 class GcsProtoSink(Operator):
+    """GCS proto sink operator"""
     @property
     def name(self):
         return "GcsProtoSink"
@@ -47,6 +58,7 @@ class GcsProtoSink(Operator):
 
 
 class OccupancyCounting(Operator):
+    """Occupancy counting operator"""
     @property
     def name(self):
         return "OccupancyCounting"

@@ -1,0 +1,9 @@
+[MAIN]
+
+ignore-paths=useful_lva_sdk/common
+
+[MESSAGES CONTROL]
+
+disable=
+    too-few-public-methods,
+    no-name-in-module
