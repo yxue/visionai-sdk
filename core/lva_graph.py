@@ -1,7 +1,7 @@
 import queue
 
-from googleapis.google.cloud.visionai.v1.lva_resources_pb2 import Analysis
-from googleapis.google.cloud.visionai.v1.lva_pb2 import AnalysisDefinition, AnalyzerDefinition
+from common.lva_resources_pb2 import Analysis
+from common.lva_pb2 import AnalysisDefinition, AnalyzerDefinition
 
 
 class Vertex:
@@ -43,7 +43,7 @@ class LvaGraph:
     """
     def __init__(self, name):
         self.name = name
-        self._vertices: list[Vertex] = []
+        self._vertices: dict[str, Vertex] = {}
         self._edges_in: dict[str, list[Edge]] = {}
         self._edges_out: dict[str, list[Edge]] = {}
         self._out_degrees: dict[str, int] = {}
@@ -55,7 +55,7 @@ class LvaGraph:
     :param name: The analyzer name.
     """
     def add_vertex(self, operator, name) -> None:
-        self._vertices.append(Vertex(operator, name))
+        self._vertices[name] = Vertex(operator, name)
 
     """
     Add an edge to the LVA graph.
@@ -85,7 +85,7 @@ class LvaGraph:
         analyzers: list[AnalyzerDefinition] = []
         q: queue.Queue[Vertex] = queue.Queue()
         out_degrees = self._out_degrees
-        for operator in self._vertices:
+        for operator in self._vertices.values():
             if operator.name not in out_degrees or out_degrees[operator.name] == 0:
                 q.put(operator)
         while not q.empty():
@@ -94,10 +94,14 @@ class LvaGraph:
                 analyzer=v.name,
                 operator=v.operator.name,
             )
-            for e in self._edges_in[v.name]:
-                analyzer.inputs.append(AnalyzerDefinition.StreamInput(input='{e.src}:{e.name}'))
-                out_degrees[e.src] -= 1
-                if out_degrees[e.src] == 0:
-                    q.put(self._vertices[e.src])
+            if v.name in self._edges_in:
+                for e in self._edges_in[v.name]:
+                    analyzer.inputs.append(AnalyzerDefinition.StreamInput(input=f'{e.src}:{e.ch}'))
+                    out_degrees[e.src] -= 1
+                    if out_degrees[e.src] == 0:
+                        q.put(self._vertices[e.src])
             analyzers.append(analyzer)
-        return Analysis(name=self.name, analysis_definition=AnalysisDefinition(analyzers=analyzers))
+        return Analysis(
+            name=self.name,
+            analysis_definition=AnalysisDefinition(analyzers=analyzers),
+            disable_event_watch=True)
