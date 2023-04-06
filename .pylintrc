@@ -1,6 +1,6 @@
 [MAIN]
 
-ignore-paths=useful_lva_sdk/common
+ignore-paths=useful_lva_sdk/common, docs
 
 [MESSAGES CONTROL]
 
