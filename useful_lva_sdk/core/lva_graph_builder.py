@@ -16,6 +16,7 @@ class LvaGraphBuilder:
             .connect("gcs_source", "oc") \
             .build().analysis()
     """
+
     def __init__(self, name):
         """
         Instantiate an LVA graph builder.
@@ -23,7 +24,7 @@ class LvaGraphBuilder:
         self._analyzers: dict[str, Operator] = {}
         self._graph = LvaGraph(name)
 
-    def add_analyzer(self, operator, name):
+    def add_analyzer(self, operator: Operator, name: str):
         """
         Add an analyzer to the LVA graph.
 
@@ -39,7 +40,7 @@ class LvaGraphBuilder:
         self._graph.add_vertex(operator, name)
         return self
 
-    def connect(self, src, dst, channel=None):
+    def connect(self, src: str, dst: str, channel=None):
         """
         Connect two analyzers via the streaming channel s.
 
@@ -64,7 +65,7 @@ class LvaGraphBuilder:
         self._graph.add_edge(src, dst, channel)
         return self
 
-    def build(self):
+    def build(self) -> LvaGraph:
         """
         Build the LVA graph.
 
