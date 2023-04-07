@@ -1,14 +1,15 @@
 """LVA graph library"""
 import queue
 
-from useful_lva_sdk.common.lva_resources_pb2 import Analysis
 from useful_lva_sdk.common.lva_pb2 import AnalysisDefinition, AnalyzerDefinition
+from useful_lva_sdk.common.lva_resources_pb2 import Analysis
+from useful_lva_sdk.core.operator import Operator
 
 
 class Vertex:
     """Vertex in the LVA graph."""
 
-    def __init__(self, operator, name):
+    def __init__(self, operator: Operator, name: str):
         """
         Instantiate a Vertex.
 
@@ -22,7 +23,7 @@ class Vertex:
 class Edge:
     """Edge in the LVA graph."""
 
-    def __init__(self, src, dst, name):
+    def __init__(self, src: str, dst: str, name: str):
         """
         Instantiate an Edge.
 
@@ -37,7 +38,8 @@ class Edge:
 
 class LvaGraph:
     """LVA graph"""
-    def __init__(self, name):
+
+    def __init__(self, name: str):
         """
         Instantiate an LVA graph.
 
@@ -50,7 +52,7 @@ class LvaGraph:
         self._edges_out: dict[str, list[Edge]] = {}
         self._out_degrees: dict[str, int] = {}
 
-    def add_vertex(self, operator, name) -> None:
+    def add_vertex(self, operator: Operator, name: str) -> None:
         """
         Add a vertex to the LVA graph.
 
@@ -59,7 +61,7 @@ class LvaGraph:
         """
         self._vertices[name] = Vertex(operator, name)
 
-    def add_edge(self, src, dst, channel) -> None:
+    def add_edge(self, src: str, dst: str, channel: str) -> None:
         """
         Add an edge to the LVA graph.
 
