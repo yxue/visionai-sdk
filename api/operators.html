@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operators &mdash; Useful LVA SDK  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LVA Client" href="lva_client.html" />
+    <link rel="prev" title="Welcome to Useful LVA SDK’s documentation!" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Useful LVA SDK
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Operators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#useful_lva_sdk.core.operator.Operator"><code class="docutils literal notranslate"><span class="pre">Operator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.Operator.attributes"><code class="docutils literal notranslate"><span class="pre">Operator.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.Operator.name"><code class="docutils literal notranslate"><span class="pre">Operator.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.Operator.output_args"><code class="docutils literal notranslate"><span class="pre">Operator.output_args</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsVideoSource"><code class="docutils literal notranslate"><span class="pre">GcsVideoSource</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsVideoSource.attributes"><code class="docutils literal notranslate"><span class="pre">GcsVideoSource.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsVideoSource.name"><code class="docutils literal notranslate"><span class="pre">GcsVideoSource.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsVideoSource.output_args"><code class="docutils literal notranslate"><span class="pre">GcsVideoSource.output_args</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsProtoSink"><code class="docutils literal notranslate"><span class="pre">GcsProtoSink</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsProtoSink.attributes"><code class="docutils literal notranslate"><span class="pre">GcsProtoSink.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsProtoSink.name"><code class="docutils literal notranslate"><span class="pre">GcsProtoSink.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.GcsProtoSink.output_args"><code class="docutils literal notranslate"><span class="pre">GcsProtoSink.output_args</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#useful_lva_sdk.core.operator.OccupancyCounting"><code class="docutils literal notranslate"><span class="pre">OccupancyCounting</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.OccupancyCounting.attributes"><code class="docutils literal notranslate"><span class="pre">OccupancyCounting.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.OccupancyCounting.name"><code class="docutils literal notranslate"><span class="pre">OccupancyCounting.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.operator.OccupancyCounting.output_args"><code class="docutils literal notranslate"><span class="pre">OccupancyCounting.output_args</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lva_client.html">LVA Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lva_graph.html">LVA Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lva_graph_builder.html">LVA Graph Builder</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Useful LVA SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Operators</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/operators.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="operators">
+<h1>Operators<a class="headerlink" href="#operators" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.Operator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">useful_lva_sdk.core.operator.</span></span><span class="sig-name descname"><span class="pre">Operator</span></span><a class="reference internal" href="../_modules/useful_lva_sdk/core/operator.html#Operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.operator.Operator" title="Permalink to this definition"></a></dt>
+<dd><p>Base operator class</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.Operator.attributes">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.Operator.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Attributes of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.Operator.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#useful_lva_sdk.core.operator.Operator.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.Operator.output_args">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_args</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#useful_lva_sdk.core.operator.Operator.output_args" title="Permalink to this definition"></a></dt>
+<dd><p>Output arguments of the operator</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsVideoSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">useful_lva_sdk.core.operator.</span></span><span class="sig-name descname"><span class="pre">GcsVideoSource</span></span><a class="reference internal" href="../_modules/useful_lva_sdk/core/operator.html#GcsVideoSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsVideoSource" title="Permalink to this definition"></a></dt>
+<dd><p>GCS video source operator</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsVideoSource.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsVideoSource.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Attributes of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsVideoSource.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsVideoSource.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsVideoSource.output_args">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_args</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsVideoSource.output_args" title="Permalink to this definition"></a></dt>
+<dd><p>Output arguments of the operator</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsProtoSink">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">useful_lva_sdk.core.operator.</span></span><span class="sig-name descname"><span class="pre">GcsProtoSink</span></span><a class="reference internal" href="../_modules/useful_lva_sdk/core/operator.html#GcsProtoSink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsProtoSink" title="Permalink to this definition"></a></dt>
+<dd><p>GCS proto sink operator</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsProtoSink.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsProtoSink.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Attributes of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsProtoSink.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsProtoSink.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.GcsProtoSink.output_args">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_args</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.GcsProtoSink.output_args" title="Permalink to this definition"></a></dt>
+<dd><p>Output arguments of the operator</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.OccupancyCounting">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">useful_lva_sdk.core.operator.</span></span><span class="sig-name descname"><span class="pre">OccupancyCounting</span></span><a class="reference internal" href="../_modules/useful_lva_sdk/core/operator.html#OccupancyCounting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.operator.OccupancyCounting" title="Permalink to this definition"></a></dt>
+<dd><p>Occupancy counting operator</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.OccupancyCounting.attributes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.OccupancyCounting.attributes" title="Permalink to this definition"></a></dt>
+<dd><p>Attributes of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.OccupancyCounting.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.OccupancyCounting.name" title="Permalink to this definition"></a></dt>
+<dd><p>Name of the operator</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.operator.OccupancyCounting.output_args">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_args</span></span><a class="headerlink" href="#useful_lva_sdk.core.operator.OccupancyCounting.output_args" title="Permalink to this definition"></a></dt>
+<dd><p>Output arguments of the operator</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to Useful LVA SDK’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lva_client.html" class="btn btn-neutral float-right" title="LVA Client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Yan Xue.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>useful_lva_sdk.client.lva_client &mdash; Useful LVA SDK  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Useful LVA SDK
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/lva_client.html">LVA Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/lva_graph.html">LVA Graph</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/lva_graph_builder.html">LVA Graph Builder</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Useful LVA SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">useful_lva_sdk.client.lva_client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for useful_lva_sdk.client.lva_client</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;LVA client library&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">google</span> <span class="kn">import</span> <span class="n">auth</span> <span class="k">as</span> <span class="n">google_auth</span>
+<span class="kn">from</span> <span class="nn">google.auth.transport</span> <span class="kn">import</span> <span class="n">grpc</span> <span class="k">as</span> <span class="n">google_auth_transport_grpc</span>
+<span class="kn">from</span> <span class="nn">google.auth.transport</span> <span class="kn">import</span> <span class="n">requests</span> <span class="k">as</span> <span class="n">google_auth_transport_requests</span>
+
+<span class="kn">from</span> <span class="nn">useful_lva_sdk.common.lva_resources_pb2</span> <span class="kn">import</span> <span class="n">Analysis</span>
+<span class="kn">from</span> <span class="nn">useful_lva_sdk.common.lva_service_pb2</span> <span class="kn">import</span> \
+    <span class="n">CreateAnalysisRequest</span><span class="p">,</span> <span class="n">ListAnalysesRequest</span><span class="p">,</span> <span class="n">DeleteAnalysisRequest</span>
+<span class="kn">from</span> <span class="nn">useful_lva_sdk.common.lva_service_pb2_grpc</span> <span class="kn">import</span> <span class="n">LiveVideoAnalyticsStub</span>
+<span class="kn">from</span> <span class="nn">useful_lva_sdk.common.operations_pb2</span> <span class="kn">import</span> <span class="n">Operation</span><span class="p">,</span> <span class="n">GetOperationRequest</span>
+<span class="kn">from</span> <span class="nn">useful_lva_sdk.common.operations_pb2_grpc</span> <span class="kn">import</span> <span class="n">OperationsStub</span>
+
+
+<span class="k">def</span> <span class="nf">get_endpoint</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get service endpoint based on the environment.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">env</span> <span class="o">==</span> <span class="s1">&#39;autopush&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;autopush-visionai.sandbox.googleapis.com&#39;</span>
+    <span class="k">if</span> <span class="n">env</span> <span class="o">==</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;staging-visionai.sandbox.googleapis.com&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;visionai.googleapis.com&#39;</span>
+
+
+<div class="viewcode-block" id="LVAClient"><a class="viewcode-back" href="../../../api/lva_client.html#useful_lva_sdk.client.lva_client.LVAClient">[docs]</a><span class="k">class</span> <span class="nc">LVAClient</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;LVA client&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="s1">&#39;prod&#39;</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        LVAClient is the gRPC client calling the LVA service.</span>
+
+<span class="sd">        :param env: service environment</span>
+<span class="sd">        :param project: the project id</span>
+<span class="sd">        :param location: the location id</span>
+<span class="sd">        :param cluster: the cluster id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">project</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;project is not specified&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">location</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;location is not specified&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cluster</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;cluster is not specified&#39;</span><span class="p">)</span>
+        <span class="n">credentials</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">google_auth</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
+
+        <span class="n">channel</span> <span class="o">=</span> <span class="n">google_auth_transport_grpc</span><span class="o">.</span><span class="n">secure_authorized_channel</span><span class="p">(</span>
+            <span class="n">credentials</span><span class="p">,</span>
+            <span class="n">google_auth_transport_requests</span><span class="o">.</span><span class="n">Request</span><span class="p">(),</span>
+            <span class="n">get_endpoint</span><span class="p">(</span><span class="n">env</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stub</span> <span class="o">=</span> <span class="n">LiveVideoAnalyticsStub</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_op_stub</span> <span class="o">=</span> <span class="n">OperationsStub</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_project</span> <span class="o">=</span> <span class="n">project</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_location</span> <span class="o">=</span> <span class="n">location</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cluster</span> <span class="o">=</span> <span class="n">cluster</span>
+
+<div class="viewcode-block" id="LVAClient.create_analysis"><a class="viewcode-back" href="../../../api/lva_client.html#useful_lva_sdk.client.lva_client.LVAClient.create_analysis">[docs]</a>    <span class="k">def</span> <span class="nf">create_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analysis_id</span><span class="p">,</span> <span class="n">analysis</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an analysis</span>
+
+<span class="sd">        :param analysis_id: the analysis id</span>
+<span class="sd">        :param analysis: the analysis object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;projects/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_project</span><span class="si">}</span><span class="s1">/locations/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_location</span><span class="si">}</span><span class="s1">/clusters/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_cluster</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;x-goog-request-params&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;parent=</span><span class="si">{</span><span class="n">parent</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">CreateAnalysisRequest</span><span class="p">(</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">parent</span><span class="p">,</span>
+            <span class="n">analysis_id</span><span class="o">=</span><span class="n">analysis_id</span><span class="p">,</span>
+            <span class="n">analysis</span><span class="o">=</span><span class="n">analysis</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_lro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stub</span><span class="o">.</span><span class="n">CreateAnalysis</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LVAClient.list_analysis"><a class="viewcode-back" href="../../../api/lva_client.html#useful_lva_sdk.client.lva_client.LVAClient.list_analysis">[docs]</a>    <span class="k">def</span> <span class="nf">list_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Analysis</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List analyses.</span>
+
+<span class="sd">        :return: List of analyses</span>
+<span class="sd">        :rtype: list[Analysis]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;projects/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_project</span><span class="si">}</span><span class="s1">/locations/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_location</span><span class="si">}</span><span class="s1">/clusters/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_cluster</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;x-goog-request-params&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;parent=</span><span class="si">{</span><span class="n">parent</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">ListAnalysesRequest</span><span class="p">(</span>
+            <span class="n">parent</span><span class="o">=</span><span class="n">parent</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stub</span><span class="o">.</span><span class="n">ListAnalyses</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span><span class="o">.</span><span class="n">analyses</span></div>
+
+<div class="viewcode-block" id="LVAClient.delete_analysis"><a class="viewcode-back" href="../../../api/lva_client.html#useful_lva_sdk.client.lva_client.LVAClient.delete_analysis">[docs]</a>    <span class="k">def</span> <span class="nf">delete_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">analysis</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete an analysis.</span>
+
+<span class="sd">        :param analysis: analysis id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;projects/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_project</span><span class="si">}</span><span class="s1">/&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;locations/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_location</span><span class="si">}</span><span class="s1">/&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;clusters/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_cluster</span><span class="si">}</span><span class="s1">/&#39;</span> \
+               <span class="sa">f</span><span class="s1">&#39;analyses/</span><span class="si">{</span><span class="n">analysis</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;x-goog-request-params&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;name=</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">DeleteAnalysisRequest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_lro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stub</span><span class="o">.</span><span class="n">DeleteAnalysis</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_wait_for_lro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op_name</span><span class="p">):</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;x-goog-request-params&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;name=</span><span class="si">{</span><span class="n">op_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)]</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">GetOperationRequest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">op_name</span><span class="p">)</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">operation</span><span class="p">:</span> <span class="n">Operation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op_stub</span><span class="o">.</span><span class="n">GetOperation</span><span class="p">(</span><span class="n">request</span><span class="o">=</span><span class="n">req</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">operation</span><span class="o">.</span><span class="n">done</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">operation</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">operation</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">break</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Yan Xue.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LVA Graph &mdash; Useful LVA SDK  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="LVA Graph Builder" href="lva_graph_builder.html" />
+    <link rel="prev" title="LVA Client" href="lva_client.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Useful LVA SDK
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lva_client.html">LVA Client</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LVA Graph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#useful_lva_sdk.core.lva_graph.LvaGraph"><code class="docutils literal notranslate"><span class="pre">LvaGraph</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.lva_graph.LvaGraph.add_edge"><code class="docutils literal notranslate"><span class="pre">LvaGraph.add_edge()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.lva_graph.LvaGraph.add_vertex"><code class="docutils literal notranslate"><span class="pre">LvaGraph.add_vertex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.lva_graph.LvaGraph.analysis"><code class="docutils literal notranslate"><span class="pre">LvaGraph.analysis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#useful_lva_sdk.core.lva_graph.LvaGraph.display"><code class="docutils literal notranslate"><span class="pre">LvaGraph.display()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#useful_lva_sdk.core.lva_graph.Vertex"><code class="docutils literal notranslate"><span class="pre">Vertex</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#useful_lva_sdk.core.lva_graph.Edge"><code class="docutils literal notranslate"><span class="pre">Edge</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lva_graph_builder.html">LVA Graph Builder</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Useful LVA SDK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">LVA Graph</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/lva_graph.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lva-graph">
+<h1>LVA Graph<a class="headerlink" href="#lva-graph" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.lva_graph.LvaGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">useful_lva_sdk.core.lva_graph.</span></span><span class="sig-name descname"><span class="pre">LvaGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/useful_lva_sdk/core/lva_graph.html#LvaGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.lva_graph.LvaGraph" title="Permalink to this definition"></a></dt>
+<dd><p>LVA graph</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.lva_graph.LvaGraph.add_edge">
+<span class="sig-name descname"><span class="pre">add_edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/useful_lva_sdk/core/lva_graph.html#LvaGraph.add_edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.lva_graph.LvaGraph.add_edge" title="Permalink to this definition"></a></dt>
+<dd><p>Add an edge to the LVA graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – The source analyzer.</p></li>
+<li><p><strong>dst</strong> – The destination analyzer.</p></li>
+<li><p><strong>channel</strong> – The streaming channel between the source and destination analyzer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.lva_graph.LvaGraph.add_vertex">
+<span class="sig-name descname"><span class="pre">add_vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="operators.html#useful_lva_sdk.core.operator.Operator" title="useful_lva_sdk.core.operator.Operator"><span class="pre">Operator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/useful_lva_sdk/core/lva_graph.html#LvaGraph.add_vertex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.lva_graph.LvaGraph.add_vertex" title="Permalink to this definition"></a></dt>
+<dd><p>Add a vertex to the LVA graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operator</strong> – The operator name.</p></li>
+<li><p><strong>name</strong> – The analyzer name.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.lva_graph.LvaGraph.analysis">
+<span class="sig-name descname"><span class="pre">analysis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Analysis</span></span></span><a class="reference internal" href="../_modules/useful_lva_sdk/core/lva_graph.html#LvaGraph.analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.lva_graph.LvaGraph.analysis" title="Permalink to this definition"></a></dt>
+<dd><p>Analysis converts the LVA graph to an Analysis resource.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The LVA analysis.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Analysis.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.lva_graph.LvaGraph.display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/useful_lva_sdk/core/lva_graph.html#LvaGraph.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.lva_graph.LvaGraph.display" title="Permalink to this definition"></a></dt>
+<dd><p>Display shows the LVA graph with graph viz.</p>
+<p><strong>Note: Graphviz is required for this function.</strong></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.lva_graph.Vertex">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">useful_lva_sdk.core.lva_graph.</span></span><span class="sig-name descname"><span class="pre">Vertex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="operators.html#useful_lva_sdk.core.operator.Operator" title="useful_lva_sdk.core.operator.Operator"><span class="pre">Operator</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/useful_lva_sdk/core/lva_graph.html#Vertex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.lva_graph.Vertex" title="Permalink to this definition"></a></dt>
+<dd><p>Vertex in the LVA graph.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="useful_lva_sdk.core.lva_graph.Edge">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">useful_lva_sdk.core.lva_graph.</span></span><span class="sig-name descname"><span class="pre">Edge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/useful_lva_sdk/core/lva_graph.html#Edge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#useful_lva_sdk.core.lva_graph.Edge" title="Permalink to this definition"></a></dt>
+<dd><p>Edge in the LVA graph.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lva_client.html" class="btn btn-neutral float-left" title="LVA Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="lva_graph_builder.html" class="btn btn-neutral float-right" title="LVA Graph Builder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Yan Xue.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
