@@ -33,7 +33,8 @@ setup(
         "google-api-core",
         "google-auth",
         "googleapis-common-protos",
+        "graphviz",
         "grpcio",
-        "protobuf"
+        "protobuf",
     ]
 )

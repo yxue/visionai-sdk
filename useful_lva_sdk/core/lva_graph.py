@@ -1,6 +1,8 @@
 """LVA graph library"""
 import queue
 
+from graphviz import Digraph
+
 from useful_lva_sdk.common.lva_pb2 import AnalysisDefinition, AnalyzerDefinition
 from useful_lva_sdk.common.lva_resources_pb2 import Analysis
 from useful_lva_sdk.core.operator import Operator
@@ -78,6 +80,30 @@ class LvaGraph:
         self._edges_in[dst].append(Edge(src, dst, channel))
         self._edges_out[src].append(Edge(src, dst, channel))
         self._out_degrees[src] += 1
+
+    def display(self):
+        """
+        Display shows the LVA graph with graph viz.
+
+        **Note: Graphviz is required for this function.**
+        """
+        graph = Digraph()
+        que: queue.Queue[Vertex] = queue.Queue()
+        out_degrees = self._out_degrees
+        for operator in self._vertices.values():
+            if operator.name not in out_degrees or out_degrees[operator.name] == 0:
+                que.put(operator)
+        while not que.empty():
+            vertex = que.get()
+            graph.node(vertex.name, f'{vertex.operator.name}({vertex.name})')
+            if vertex.name in self._edges_in:
+                for edge in self._edges_in[vertex.name]:
+                    graph.edge(edge.src, vertex.name, f'{edge.src}:{edge.name}')
+                    out_degrees[edge.src] -= 1
+                    if out_degrees[edge.src] == 0:
+                        que.put(self._vertices[edge.src])
+        graph.render(view=True)
+        return self
 
     def analysis(self) -> Analysis:
         """
